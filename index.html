@@ -1,0 +1,68 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class ="site-header-logo"> 
+        <h1 class="text-center">
+            Human Capital Index Project
+        </h1>
+    </div>
+    <div class="row p-4">
+        <div class="card mb-4 ml-auto mr-auto" style="width: 90%;" data-aos="fade-right">
+            <div class="card-body">
+                <div id = "chart1"></div>
+                <p>
+                    Actual HCI values
+                </p>
+            </div>
+        </div>
+
+        <div class="card mb-4 ml-auto mr-auto" style="width: 90%;" data-aos="fade-left">
+            <div class="card-body">
+                <div id = "chart2"></div>
+                <p>
+                    Actual GDP values
+                </p>
+            </div>
+        </div>
+
+        <div class="card mb-4 ml-auto mr-auto" style="width: 90%;" data-aos="fade-right">
+            <div class="card-body">
+                <div id = "chart3"></div>
+                <p>
+                    The percent difference in actual GDP values versus predicted values from the linear regression model
+                </p>
+            </div>
+        </div>
+
+        <div class="card mb-4 ml-auto mr-auto" style="width: 90%;" data-aos="fade-left">
+            <div class="card-body">
+                <div id = "chart4"></div>
+                <p>
+                    Region 1 = Europe and Central Asia,
+                    Region 2 = Latin America and Caribbean,
+                    Region 3 = Middle East and North Africa,
+                    Region 4 = North America,
+                    Region 5 = South Asia,
+                    Region 5 = Sub-Saharan Africa
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- plotly CDN -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script>
+        var graphs1 = {{ graph1JSON | safe}};
+        Plotly.plot("chart1", graphs1, {})
+
+        var graphs2 = {{ graph2JSON | safe}};
+        Plotly.plot("chart2", graphs2, {})
+
+        var graphs3 = {{ graph3JSON | safe}};
+        Plotly.plot("chart3", graphs3, {})
+
+        var graphs4 = {{ graph4JSON | safe}};
+        Plotly.plot("chart4", graphs4, {})
+      
+    </script>
+{% endblock %}
