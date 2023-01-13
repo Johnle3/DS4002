@@ -1,0 +1,2638 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.313">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>DS 4002: Human Capital Index (HCI) Project</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="HCI_7_1_files/libs/clipboard/clipboard.min.js"></script>
+<script src="HCI_7_1_files/libs/quarto-html/quarto.js"></script>
+<script src="HCI_7_1_files/libs/quarto-html/popper.min.js"></script>
+<script src="HCI_7_1_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="HCI_7_1_files/libs/quarto-html/anchor.min.js"></script>
+<link href="HCI_7_1_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="HCI_7_1_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="HCI_7_1_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="HCI_7_1_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="HCI_7_1_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+<script src="https://unpkg.com/@jupyter-widgets/html-manager@*/dist/embed-amd.js" crossorigin="anonymous"></script>
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">DS 4002: Human Capital Index (HCI) Project</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<h4 class="anchored">
+Predicting GDP Per Capita Using 2020 HCI Data And Visualizations
+</h4>
+<h5 class="anchored">
+Group 7 - Matthew Heeter, John Le, and Andrew Nguyen
+</h5>
+<h2 class="anchored">
+Question and Background Information
+</h2>
+<p>The World Bank’s Human Capital Project is an initiative that aims to increase the productive capacity of people in developing countries through investments in health, education, and training. The project aims to improve human capital outcomes, such as health outcomes, educational achievements, and labor market outcomes, in order to accelerate economic growth and reduce poverty. It also aims to promote gender equality and inclusivity.</p>
+<p>The project uses data and evidence to inform policy decisions and interventions at the national and subnational levels, and works with governments, civil society organizations, and other stakeholders to design and implement effective policies and programs. The project also focuses on the measurement of human capital, including the development of the Human Capital Index (HCI), which ranks countries (from a scale of 0 to 1, with 1 being the highest rank) based on their investments in health, education, and training.</p>
+<p>The HCI is used to inform policy decisions and track progress over time. Overall, the goal of the Human Capital Project is to help countries achieve their development goals and create a more prosperous future for all their citizens.</p>
+<h2 class="anchored">
+Research Goals
+</h2>
+<ol type="1">
+<li><p>Predicting health outcomes based on investments in health, education, and training: This project could involve using machine learning algorithms to predict health outcomes (such as infant mortality rates or life expectancy) based on data on investments in health, education, and training. The goal of this project would be to identify the most effective interventions for improving health outcomes in developing countries.</p></li>
+<li><p>Predicting educational achievements based on investments in education and training: This project could involve using machine learning algorithms to predict educational achievements (such as literacy rates or enrollment rates) based on data on investments in education and training. The goal of this project would be to identify the most effective interventions for improving educational outcomes in developing countries.</p></li>
+<li><p>Predicting labor market outcomes based on investments in education and training: This project could involve using machine learning algorithms to predict labor market outcomes (such as employment rates or wage levels) based on data on investments in education and training. The goal of this project would be to identify the most effective interventions for improving labor market outcomes in developing countries.</p></li>
+</ol>
+<p>Related Research - HCI vs.&nbsp;GDP per capita seem to have a strong, positive, and linear relationship as seen in the 2016 Our World in Data website. Source: https://ourworldindata.org/grapher/human-capital-index-vs-gdp</p>
+<h2 class="anchored">
+Questions
+</h2>
+<ol type="1">
+<li>What’s the most optimal machine learning model for accurately predicting a country’s GDP per capita using HCI (Human Capital Index) socio-economic and demographic data?<br>
+</li>
+<li>How do we effectively portray the relationships between HCI and GDP per capita?</li>
+</ol>
+<h2 class="anchored">
+Exploratory Data Analysis
+</h2>
+<h4 class="anchored">
+Dataset: World Bank Human Capital Index Dataset (2020)
+</h4>
+<h4 class="anchored">
+Data Cleaning
+</h4>
+<div class="cell" data-execution_count="43">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Read the Excel file into a DataFrame</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>hci <span class="op">=</span> pd.read_excel(<span class="st">'/Users/mattheeter/DS4002/hci_data_september_2020.xlsx'</span>, sheet_name<span class="op">=</span><span class="st">'HCI 2020 - MaleFemale'</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>hci<span class="op">=</span>hci[hci.columns[<span class="dv">0</span>:<span class="dv">13</span>]]</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply the 'default' style to the DataFrame</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>hci.style.set_caption(<span class="st">'Human Capital Index (HCI) - Male and Female'</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Drop WB Code</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>hci <span class="op">=</span> hci.drop(<span class="st">'WB Code'</span>, axis <span class="op">=</span> <span class="dv">1</span>)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Drop upper and lower bounds</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>hci <span class="op">=</span> hci.drop(<span class="st">'HUMAN CAPITAL INDEX 2020 (LOWER BOUND)'</span>, axis <span class="op">=</span> <span class="dv">1</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>hci <span class="op">=</span> hci.drop(<span class="st">'HUMAN CAPITAL INDEX 2020 (UPPER BOUND)'</span>, axis <span class="op">=</span> <span class="dv">1</span>)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>hci <span class="op">=</span> hci.drop(<span class="st">'Fraction of Children Under 5 Not Stunted'</span>, axis <span class="op">=</span> <span class="dv">1</span>)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># hci = hci.dropna()</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co"># hci = hci[hci['Fraction of Children Under 5 Not Stunted'] != '-']</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the DataFrame</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>hci.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="43">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Country Name</th>
+      <th>Region</th>
+      <th>Income Group</th>
+      <th>Probability of Survival to Age 5</th>
+      <th>Expected Years of School</th>
+      <th>Harmonized Test Scores</th>
+      <th>Learning-Adjusted Years of School</th>
+      <th>Adult Survival Rate</th>
+      <th>HUMAN CAPITAL INDEX 2020</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Afghanistan</td>
+      <td>South Asia</td>
+      <td>Low income</td>
+      <td>0.937724</td>
+      <td>8.901891</td>
+      <td>354.758789</td>
+      <td>5.052838</td>
+      <td>0.787741</td>
+      <td>0.400284</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Albania</td>
+      <td>Europe &amp; Central Asia</td>
+      <td>Upper middle income</td>
+      <td>0.991177</td>
+      <td>12.889381</td>
+      <td>434.127594</td>
+      <td>8.953018</td>
+      <td>0.929366</td>
+      <td>0.634251</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Algeria</td>
+      <td>Middle East &amp; North Africa</td>
+      <td>Lower middle income</td>
+      <td>0.976518</td>
+      <td>11.848035</td>
+      <td>374.089081</td>
+      <td>7.091553</td>
+      <td>0.909282</td>
+      <td>0.534556</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Angola</td>
+      <td>Sub-Saharan Africa</td>
+      <td>Lower middle income</td>
+      <td>0.922835</td>
+      <td>8.120066</td>
+      <td>325.965485</td>
+      <td>4.234978</td>
+      <td>0.729359</td>
+      <td>0.362405</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Antigua and Barbuda</td>
+      <td>Latin America &amp; Caribbean</td>
+      <td>High income</td>
+      <td>0.993559</td>
+      <td>12.967560</td>
+      <td>406.997437</td>
+      <td>8.444422</td>
+      <td>0.897208</td>
+      <td>0.595704</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<ul>
+<li>Main dataset: 2020 Human Capital Index</li>
+<li>Derived from the World Bank database</li>
+<li>Data from September 2020 for 174 countries with each row representing a specific country</li>
+<li>Includes columns on WB code, region, and income group for each country</li>
+<li>Also contains columns on specific Human Capital Index (HCI) information, such as Probability of Survival to Age 5, Expected Years of School, Harmonized Test Scores, Learning- Adjusted Years of School, Fraction of Children Under 5 Not Stunted, Adult Survival Rate, calculated HCI score with its lower bound and upper bound for each country</li>
+<li>Removed lower bound and upper bound of HCI 2020, Fraction of Children Under 5 Not Stunted column (because there were too many missing/null values), and WB code (unnecessary categorical variable)</li>
+</ul>
+<h4 class="anchored">
+Dataset: World Bank GDP Per Capita ($) Dataset (1965-2021)
+</h4>
+<div class="cell" data-execution_count="44">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Read the Excel file into a DataFrame</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>gdp <span class="op">=</span> pd.read_csv(<span class="st">'/Users/mattheeter/DS4002/API_NY.GDP.PCAP.CD_DS2_en_csv_v2_4770417.csv'</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>gdp2020 <span class="op">=</span> gdp[[<span class="st">'Country Name'</span>,<span class="st">'2020'</span>]]</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply the 'default' style to the DataFrame</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>gdp.style.set_caption(<span class="st">'Data'</span>)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the DataFrame</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>gdp2020.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="44">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Country Name</th>
+      <th>2020</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Aruba</td>
+      <td>24487.863560</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Africa Eastern and Southern</td>
+      <td>1353.769160</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Afghanistan</td>
+      <td>516.866552</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Africa Western and Central</td>
+      <td>1683.436391</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Angola</td>
+      <td>1603.993477</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<ul>
+<li>Also derived from the World Bank database</li>
+<li>Data from 1965 - 2021 on countries’ GDP per capita</li>
+<li>Each row represents a country and the columns are the year</li>
+<li>Data from 266 markets - including counties, regions and territories</li>
+</ul>
+<h4 class="anchored">
+Merge two datasets
+</h4>
+<div class="cell" data-execution_count="45">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Merge the two datasets on the 'Country' column</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.merge(hci, gdp2020, on<span class="op">=</span><span class="st">'Country Name'</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Drop rows with any null values</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.dropna()</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Drop the country name </span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>df_train <span class="op">=</span> df.drop(<span class="st">'Country Name'</span>, axis <span class="op">=</span> <span class="dv">1</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the merged DataFrame</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>df.head()</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="45">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Country Name</th>
+      <th>Region</th>
+      <th>Income Group</th>
+      <th>Probability of Survival to Age 5</th>
+      <th>Expected Years of School</th>
+      <th>Harmonized Test Scores</th>
+      <th>Learning-Adjusted Years of School</th>
+      <th>Adult Survival Rate</th>
+      <th>HUMAN CAPITAL INDEX 2020</th>
+      <th>2020</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Afghanistan</td>
+      <td>South Asia</td>
+      <td>Low income</td>
+      <td>0.937724</td>
+      <td>8.901891</td>
+      <td>354.758789</td>
+      <td>5.052838</td>
+      <td>0.787741</td>
+      <td>0.400284</td>
+      <td>516.866552</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Albania</td>
+      <td>Europe &amp; Central Asia</td>
+      <td>Upper middle income</td>
+      <td>0.991177</td>
+      <td>12.889381</td>
+      <td>434.127594</td>
+      <td>8.953018</td>
+      <td>0.929366</td>
+      <td>0.634251</td>
+      <td>5332.160475</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Algeria</td>
+      <td>Middle East &amp; North Africa</td>
+      <td>Lower middle income</td>
+      <td>0.976518</td>
+      <td>11.848035</td>
+      <td>374.089081</td>
+      <td>7.091553</td>
+      <td>0.909282</td>
+      <td>0.534556</td>
+      <td>3337.252512</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Angola</td>
+      <td>Sub-Saharan Africa</td>
+      <td>Lower middle income</td>
+      <td>0.922835</td>
+      <td>8.120066</td>
+      <td>325.965485</td>
+      <td>4.234978</td>
+      <td>0.729359</td>
+      <td>0.362405</td>
+      <td>1603.993477</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Antigua and Barbuda</td>
+      <td>Latin America &amp; Caribbean</td>
+      <td>High income</td>
+      <td>0.993559</td>
+      <td>12.967560</td>
+      <td>406.997437</td>
+      <td>8.444422</td>
+      <td>0.897208</td>
+      <td>0.595704</td>
+      <td>14787.635780</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<h4 class="anchored">
+Summary Stats
+</h4>
+<div class="cell" data-execution_count="46">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get summary statistics of the DataFrame</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>df_stats <span class="op">=</span> df.describe()</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply formatting to the table</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>df_stats.style.set_caption(<span class="st">'Summary Statistics'</span>)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>df_stats.style.set_precision(<span class="dv">2</span>)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>df_stats.style.<span class="bu">format</span>({<span class="st">'mean'</span>: <span class="st">'${:,.2f}'</span>, <span class="st">'min'</span>: <span class="st">'${:,.2f}'</span>, <span class="st">'max'</span>: <span class="st">'${:,.2f}'</span>})</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the table</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>df_stats</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>/var/folders/nj/705wgkn91bx4dynjyw516f840000gn/T/ipykernel_66173/750947143.py:6: FutureWarning:
+
+this method is deprecated in favour of `Styler.format(precision=..)`
+</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="46">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Probability of Survival to Age 5</th>
+      <th>Expected Years of School</th>
+      <th>Harmonized Test Scores</th>
+      <th>Learning-Adjusted Years of School</th>
+      <th>Adult Survival Rate</th>
+      <th>HUMAN CAPITAL INDEX 2020</th>
+      <th>2020</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>168.000000</td>
+      <td>168.000000</td>
+      <td>168.000000</td>
+      <td>168.000000</td>
+      <td>168.000000</td>
+      <td>168.000000</td>
+      <td>168.000000</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>0.973054</td>
+      <td>11.379255</td>
+      <td>423.947414</td>
+      <td>7.869514</td>
+      <td>0.850771</td>
+      <td>0.564158</td>
+      <td>14157.843802</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>0.027431</td>
+      <td>2.276297</td>
+      <td>62.781017</td>
+      <td>2.429186</td>
+      <td>0.083304</td>
+      <td>0.137317</td>
+      <td>19679.216603</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>0.880086</td>
+      <td>4.156989</td>
+      <td>304.922241</td>
+      <td>2.206502</td>
+      <td>0.522544</td>
+      <td>0.291632</td>
+      <td>216.826741</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>0.960007</td>
+      <td>10.144179</td>
+      <td>379.442459</td>
+      <td>6.085780</td>
+      <td>0.802397</td>
+      <td>0.453250</td>
+      <td>1899.932748</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>0.984219</td>
+      <td>12.201100</td>
+      <td>414.321365</td>
+      <td>7.941399</td>
+      <td>0.861430</td>
+      <td>0.566201</td>
+      <td>5342.754270</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>0.992954</td>
+      <td>13.121243</td>
+      <td>473.094193</td>
+      <td>9.763350</td>
+      <td>0.916337</td>
+      <td>0.666993</td>
+      <td>16945.454083</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>0.998305</td>
+      <td>13.936425</td>
+      <td>575.272156</td>
+      <td>12.813290</td>
+      <td>0.961434</td>
+      <td>0.879126</td>
+      <td>117370.496900</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<h4 class="anchored">
+Boxplots
+</h4>
+<div class="cell" data-execution_count="47">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a dataframe with Probability of Survival to Age 5</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>df_ps5 <span class="op">=</span> df[<span class="st">"Probability of Survival to Age 5"</span>]</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the figure and axis objects</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the boxplot with the new dataframe</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>bp <span class="op">=</span> ax.boxplot(df_ps5)</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Add a title</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Boxplot for Probability of Survival to Age 5"</span>)</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove x-axis </span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>ax.xaxis.set_visible(<span class="va">False</span>)</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Add y-axis</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Under 5 Mortality Rate from 1 (in %)"</span>)</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the plot</span></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a dataframe with Expected Years of School</span></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>df_eys <span class="op">=</span> df[<span class="st">"Expected Years of School"</span>]</span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the figure and axis objects</span></span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the boxplot with the new dataframe</span></span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>bp <span class="op">=</span> ax.boxplot(df_eys)</span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a><span class="co"># Add a title</span></span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Boxplot for Expected Years of School Between Ages 4 and 17"</span>)</span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove x-axis </span></span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a>ax.xaxis.set_visible(<span class="va">False</span>)</span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a><span class="co"># Add y-axis</span></span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Expected Years of School"</span>)</span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the plot</span></span>
+<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a dataframe with Harmonized Test Scores</span></span>
+<span id="cb6-47"><a href="#cb6-47" aria-hidden="true" tabindex="-1"></a>df_hts <span class="op">=</span> df[<span class="st">"Harmonized Test Scores"</span>]</span>
+<span id="cb6-48"><a href="#cb6-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-49"><a href="#cb6-49" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the figure and axis objects</span></span>
+<span id="cb6-50"><a href="#cb6-50" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
+<span id="cb6-51"><a href="#cb6-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-52"><a href="#cb6-52" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the boxplot with the new dataframe</span></span>
+<span id="cb6-53"><a href="#cb6-53" aria-hidden="true" tabindex="-1"></a>bp <span class="op">=</span> ax.boxplot(df_hts)</span>
+<span id="cb6-54"><a href="#cb6-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-55"><a href="#cb6-55" aria-hidden="true" tabindex="-1"></a><span class="co"># Add a title</span></span>
+<span id="cb6-56"><a href="#cb6-56" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Boxplot for Harmonized Test Scores"</span>)</span>
+<span id="cb6-57"><a href="#cb6-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-58"><a href="#cb6-58" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove x-axis </span></span>
+<span id="cb6-59"><a href="#cb6-59" aria-hidden="true" tabindex="-1"></a>ax.xaxis.set_visible(<span class="va">False</span>)</span>
+<span id="cb6-60"><a href="#cb6-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-61"><a href="#cb6-61" aria-hidden="true" tabindex="-1"></a><span class="co"># Add y-axis</span></span>
+<span id="cb6-62"><a href="#cb6-62" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"TIMMS-equivalent units (300-625)"</span>)</span>
+<span id="cb6-63"><a href="#cb6-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-64"><a href="#cb6-64" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the plot</span></span>
+<span id="cb6-65"><a href="#cb6-65" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb6-66"><a href="#cb6-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-67"><a href="#cb6-67" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a dataframe with Learning-Adjusted Years of School</span></span>
+<span id="cb6-68"><a href="#cb6-68" aria-hidden="true" tabindex="-1"></a>df_lys <span class="op">=</span> df[<span class="st">"Learning-Adjusted Years of School"</span>]</span>
+<span id="cb6-69"><a href="#cb6-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-70"><a href="#cb6-70" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the figure and axis objects</span></span>
+<span id="cb6-71"><a href="#cb6-71" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
+<span id="cb6-72"><a href="#cb6-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-73"><a href="#cb6-73" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the boxplot with the new dataframe</span></span>
+<span id="cb6-74"><a href="#cb6-74" aria-hidden="true" tabindex="-1"></a>bp <span class="op">=</span> ax.boxplot(df_lys)</span>
+<span id="cb6-75"><a href="#cb6-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-76"><a href="#cb6-76" aria-hidden="true" tabindex="-1"></a><span class="co"># Add a title</span></span>
+<span id="cb6-77"><a href="#cb6-77" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Boxplot for Learning-Adjusted Years of School"</span>)</span>
+<span id="cb6-78"><a href="#cb6-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-79"><a href="#cb6-79" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove x-axis </span></span>
+<span id="cb6-80"><a href="#cb6-80" aria-hidden="true" tabindex="-1"></a>ax.xaxis.set_visible(<span class="va">False</span>)</span>
+<span id="cb6-81"><a href="#cb6-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-82"><a href="#cb6-82" aria-hidden="true" tabindex="-1"></a><span class="co"># Add y-axis</span></span>
+<span id="cb6-83"><a href="#cb6-83" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Learning-Adjusted Years of School (EYoS * HTS)"</span>)</span>
+<span id="cb6-84"><a href="#cb6-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-85"><a href="#cb6-85" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the plot</span></span>
+<span id="cb6-86"><a href="#cb6-86" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb6-87"><a href="#cb6-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-88"><a href="#cb6-88" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a dataframe with Adult Survival Rate</span></span>
+<span id="cb6-89"><a href="#cb6-89" aria-hidden="true" tabindex="-1"></a>df_adr <span class="op">=</span> df[<span class="st">"Adult Survival Rate"</span>]</span>
+<span id="cb6-90"><a href="#cb6-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-91"><a href="#cb6-91" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the figure and axis objects</span></span>
+<span id="cb6-92"><a href="#cb6-92" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
+<span id="cb6-93"><a href="#cb6-93" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-94"><a href="#cb6-94" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the boxplot with the new dataframe</span></span>
+<span id="cb6-95"><a href="#cb6-95" aria-hidden="true" tabindex="-1"></a>bp <span class="op">=</span> ax.boxplot(df_adr)</span>
+<span id="cb6-96"><a href="#cb6-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-97"><a href="#cb6-97" aria-hidden="true" tabindex="-1"></a><span class="co"># Add a title</span></span>
+<span id="cb6-98"><a href="#cb6-98" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Boxplot for Adult Survival Rate for 15-60 year-olds"</span>)</span>
+<span id="cb6-99"><a href="#cb6-99" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-100"><a href="#cb6-100" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove x-axis </span></span>
+<span id="cb6-101"><a href="#cb6-101" aria-hidden="true" tabindex="-1"></a>ax.xaxis.set_visible(<span class="va">False</span>)</span>
+<span id="cb6-102"><a href="#cb6-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-103"><a href="#cb6-103" aria-hidden="true" tabindex="-1"></a><span class="co"># Add y-axis</span></span>
+<span id="cb6-104"><a href="#cb6-104" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Mortality Rate (in %)"</span>)</span>
+<span id="cb6-105"><a href="#cb6-105" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-106"><a href="#cb6-106" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the plot</span></span>
+<span id="cb6-107"><a href="#cb6-107" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb6-108"><a href="#cb6-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-109"><a href="#cb6-109" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a dataframe with Human Capital Index 2020</span></span>
+<span id="cb6-110"><a href="#cb6-110" aria-hidden="true" tabindex="-1"></a>df_hci <span class="op">=</span> df[<span class="st">"HUMAN CAPITAL INDEX 2020"</span>]</span>
+<span id="cb6-111"><a href="#cb6-111" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-112"><a href="#cb6-112" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the figure and axis objects</span></span>
+<span id="cb6-113"><a href="#cb6-113" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
+<span id="cb6-114"><a href="#cb6-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-115"><a href="#cb6-115" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the boxplot with the new dataframe</span></span>
+<span id="cb6-116"><a href="#cb6-116" aria-hidden="true" tabindex="-1"></a>bp <span class="op">=</span> ax.boxplot(df_hci)</span>
+<span id="cb6-117"><a href="#cb6-117" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-118"><a href="#cb6-118" aria-hidden="true" tabindex="-1"></a><span class="co"># Add a title</span></span>
+<span id="cb6-119"><a href="#cb6-119" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Boxplot for Human Capital Index 2020"</span>)</span>
+<span id="cb6-120"><a href="#cb6-120" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-121"><a href="#cb6-121" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove x-axis </span></span>
+<span id="cb6-122"><a href="#cb6-122" aria-hidden="true" tabindex="-1"></a>ax.xaxis.set_visible(<span class="va">False</span>)</span>
+<span id="cb6-123"><a href="#cb6-123" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-124"><a href="#cb6-124" aria-hidden="true" tabindex="-1"></a><span class="co"># Add y-axis</span></span>
+<span id="cb6-125"><a href="#cb6-125" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Human Capital Index score"</span>)</span>
+<span id="cb6-126"><a href="#cb6-126" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-127"><a href="#cb6-127" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the plot</span></span>
+<span id="cb6-128"><a href="#cb6-128" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img src="HCI_7_1_files/figure-html/cell-6-output-1.png" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="HCI_7_1_files/figure-html/cell-6-output-2.png" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="HCI_7_1_files/figure-html/cell-6-output-3.png" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="HCI_7_1_files/figure-html/cell-6-output-4.png" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="HCI_7_1_files/figure-html/cell-6-output-5.png" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="HCI_7_1_files/figure-html/cell-6-output-6.png" class="img-fluid"></p>
+</div>
+</div>
+<h4 class="anchored">
+Data Processing
+</h4>
+<div class="cell" data-execution_count="48">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Data Processing for Categorical Variables </span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> LabelEncoder</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># List of categorical columns to encode</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>cat_cols <span class="op">=</span> [<span class="st">'Region'</span>, <span class="st">'Income Group'</span>]</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a label encoder for each column</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>le_dict <span class="op">=</span> {}</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> cat_cols:</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    le_dict[col] <span class="op">=</span> LabelEncoder()</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    le_dict[col].fit(df[col])</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Use the label encoders to transform the categorical variables and store the encoded values in new columns</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> cat_cols:</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    df_train[col <span class="op">+</span> <span class="st">'_encoded'</span>] <span class="op">=</span> le_dict[col].transform(df_train[col])</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>df_train.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="48">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Region</th>
+      <th>Income Group</th>
+      <th>Probability of Survival to Age 5</th>
+      <th>Expected Years of School</th>
+      <th>Harmonized Test Scores</th>
+      <th>Learning-Adjusted Years of School</th>
+      <th>Adult Survival Rate</th>
+      <th>HUMAN CAPITAL INDEX 2020</th>
+      <th>2020</th>
+      <th>Region_encoded</th>
+      <th>Income Group_encoded</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>South Asia</td>
+      <td>Low income</td>
+      <td>0.937724</td>
+      <td>8.901891</td>
+      <td>354.758789</td>
+      <td>5.052838</td>
+      <td>0.787741</td>
+      <td>0.400284</td>
+      <td>516.866552</td>
+      <td>5</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Europe &amp; Central Asia</td>
+      <td>Upper middle income</td>
+      <td>0.991177</td>
+      <td>12.889381</td>
+      <td>434.127594</td>
+      <td>8.953018</td>
+      <td>0.929366</td>
+      <td>0.634251</td>
+      <td>5332.160475</td>
+      <td>1</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Middle East &amp; North Africa</td>
+      <td>Lower middle income</td>
+      <td>0.976518</td>
+      <td>11.848035</td>
+      <td>374.089081</td>
+      <td>7.091553</td>
+      <td>0.909282</td>
+      <td>0.534556</td>
+      <td>3337.252512</td>
+      <td>3</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Sub-Saharan Africa</td>
+      <td>Lower middle income</td>
+      <td>0.922835</td>
+      <td>8.120066</td>
+      <td>325.965485</td>
+      <td>4.234978</td>
+      <td>0.729359</td>
+      <td>0.362405</td>
+      <td>1603.993477</td>
+      <td>6</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Latin America &amp; Caribbean</td>
+      <td>High income</td>
+      <td>0.993559</td>
+      <td>12.967560</td>
+      <td>406.997437</td>
+      <td>8.444422</td>
+      <td>0.897208</td>
+      <td>0.595704</td>
+      <td>14787.635780</td>
+      <td>2</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<h4 class="anchored">
+One Hot Encoding
+</h4>
+<div class="cell" data-execution_count="49">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> OneHotEncoder</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co"># List of categorical columns to encode</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>cat_cols <span class="op">=</span> [<span class="st">'Region'</span>, <span class="st">'Income Group'</span>]</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Create an OneHotEncoder object</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>ohe <span class="op">=</span> OneHotEncoder()</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit the OneHotEncoder to the categorical columns</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>ohe.fit(df_train[cat_cols])</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Use the OneHotEncoder to transform the categorical columns and concatenate the encoded columns to the original DataFrame</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>encoded_df <span class="op">=</span> pd.concat([df_train, pd.DataFrame(ohe.transform(df_train[cat_cols]).toarray(), columns<span class="op">=</span>ohe.get_feature_names_out(cat_cols))], axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Drop the original categorical columns</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>encoded_df <span class="op">=</span> encoded_df.drop(cat_cols, axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="co">#Cleaning </span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>encoded_df <span class="op">=</span> encoded_df.dropna()</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Saves csv onto computer </span></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a><span class="co"># encoded_df.to_csv('data5.csv', index=False)</span></span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-execution_count="50">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Merge encoded_df (clean data) and df (country name)</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co"># index country name from original dataframe</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>df_country <span class="op">=</span> df[<span class="st">"Country Name"</span>]</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>df_country<span class="op">=</span> df_country.to_frame()</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co"># set the row number as the index</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>df_country.index.name <span class="op">=</span> <span class="st">"index"</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>encoded_df.index.name <span class="op">=</span> <span class="st">"index"</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="co"># # join the DataFrames on the index column</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>final_df_country <span class="op">=</span> df_country.merge(encoded_df, left_index<span class="op">=</span><span class="va">True</span>, right_index<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="co"># # print the result</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>final_df_country.head()</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="co"># final_df_country.to_csv('final_df_country.csv', index=False)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="50">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Country Name</th>
+      <th>Probability of Survival to Age 5</th>
+      <th>Expected Years of School</th>
+      <th>Harmonized Test Scores</th>
+      <th>Learning-Adjusted Years of School</th>
+      <th>Adult Survival Rate</th>
+      <th>HUMAN CAPITAL INDEX 2020</th>
+      <th>2020</th>
+      <th>Region_encoded</th>
+      <th>Income Group_encoded</th>
+      <th>...</th>
+      <th>Region_Europe &amp; Central Asia</th>
+      <th>Region_Latin America &amp; Caribbean</th>
+      <th>Region_Middle East &amp; North Africa</th>
+      <th>Region_North America</th>
+      <th>Region_South Asia</th>
+      <th>Region_Sub-Saharan Africa</th>
+      <th>Income Group_High income</th>
+      <th>Income Group_Low income</th>
+      <th>Income Group_Lower middle income</th>
+      <th>Income Group_Upper middle income</th>
+    </tr>
+    <tr>
+      <th>index</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Afghanistan</td>
+      <td>0.937724</td>
+      <td>8.901891</td>
+      <td>354.758789</td>
+      <td>5.052838</td>
+      <td>0.787741</td>
+      <td>0.400284</td>
+      <td>516.866552</td>
+      <td>5.0</td>
+      <td>1.0</td>
+      <td>...</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Albania</td>
+      <td>0.991177</td>
+      <td>12.889381</td>
+      <td>434.127594</td>
+      <td>8.953018</td>
+      <td>0.929366</td>
+      <td>0.634251</td>
+      <td>5332.160475</td>
+      <td>1.0</td>
+      <td>3.0</td>
+      <td>...</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Algeria</td>
+      <td>0.976518</td>
+      <td>11.848035</td>
+      <td>374.089081</td>
+      <td>7.091553</td>
+      <td>0.909282</td>
+      <td>0.534556</td>
+      <td>3337.252512</td>
+      <td>3.0</td>
+      <td>2.0</td>
+      <td>...</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Angola</td>
+      <td>0.922835</td>
+      <td>8.120066</td>
+      <td>325.965485</td>
+      <td>4.234978</td>
+      <td>0.729359</td>
+      <td>0.362405</td>
+      <td>1603.993477</td>
+      <td>6.0</td>
+      <td>2.0</td>
+      <td>...</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Antigua and Barbuda</td>
+      <td>0.993559</td>
+      <td>12.967560</td>
+      <td>406.997437</td>
+      <td>8.444422</td>
+      <td>0.897208</td>
+      <td>0.595704</td>
+      <td>14787.635780</td>
+      <td>2.0</td>
+      <td>0.0</td>
+      <td>...</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 21 columns</p>
+</div>
+</div>
+</div>
+<h2 class="anchored">
+Methods
+</h2>
+<h4 class="anchored">
+Removing Outliers Using Z-Scores
+</h4>
+<div class="cell" data-execution_count="51">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> stats</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate z-scores for each data point in the column</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>z_scores <span class="op">=</span> stats.zscore(encoded_df[<span class="st">"2020"</span>])</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co"># remove the rows with outliers in the "2020" column</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>encoded_df <span class="op">=</span> encoded_df[np.<span class="bu">abs</span>(z_scores) <span class="op">&lt;</span> <span class="dv">3</span>]</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>encoded_df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="51">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Probability of Survival to Age 5</th>
+      <th>Expected Years of School</th>
+      <th>Harmonized Test Scores</th>
+      <th>Learning-Adjusted Years of School</th>
+      <th>Adult Survival Rate</th>
+      <th>HUMAN CAPITAL INDEX 2020</th>
+      <th>2020</th>
+      <th>Region_encoded</th>
+      <th>Income Group_encoded</th>
+      <th>Region_East Asia &amp; Pacific</th>
+      <th>Region_Europe &amp; Central Asia</th>
+      <th>Region_Latin America &amp; Caribbean</th>
+      <th>Region_Middle East &amp; North Africa</th>
+      <th>Region_North America</th>
+      <th>Region_South Asia</th>
+      <th>Region_Sub-Saharan Africa</th>
+      <th>Income Group_High income</th>
+      <th>Income Group_Low income</th>
+      <th>Income Group_Lower middle income</th>
+      <th>Income Group_Upper middle income</th>
+    </tr>
+    <tr>
+      <th>index</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.937724</td>
+      <td>8.901891</td>
+      <td>354.758789</td>
+      <td>5.052838</td>
+      <td>0.787741</td>
+      <td>0.400284</td>
+      <td>516.866552</td>
+      <td>5.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.991177</td>
+      <td>12.889381</td>
+      <td>434.127594</td>
+      <td>8.953018</td>
+      <td>0.929366</td>
+      <td>0.634251</td>
+      <td>5332.160475</td>
+      <td>1.0</td>
+      <td>3.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.976518</td>
+      <td>11.848035</td>
+      <td>374.089081</td>
+      <td>7.091553</td>
+      <td>0.909282</td>
+      <td>0.534556</td>
+      <td>3337.252512</td>
+      <td>3.0</td>
+      <td>2.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.922835</td>
+      <td>8.120066</td>
+      <td>325.965485</td>
+      <td>4.234978</td>
+      <td>0.729359</td>
+      <td>0.362405</td>
+      <td>1603.993477</td>
+      <td>6.0</td>
+      <td>2.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.993559</td>
+      <td>12.967560</td>
+      <td>406.997437</td>
+      <td>8.444422</td>
+      <td>0.897208</td>
+      <td>0.595704</td>
+      <td>14787.635780</td>
+      <td>2.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<h4 class="anchored">
+Modeling
+</h4>
+<ul>
+<li><p>After removing the outliers, we wanted to split the data into a training and testing data set with a 80/20 split, respectively because we felt an 80/20 split was appropriate since we did not have that much data, so we wanted to make sure our model was well-trained (hence the high 80% on training set).</p></li>
+<li><p>We wanted to run three models: Linear Regression (base model), Support Vector Machines (SVM), and K-nearest neighbors (KNN).</p></li>
+<li><p>Linear Regression is a base model. We started with the assumption that there is a linear relationship between HCI and GDP.</p></li>
+<li><p>Support Vector Reggression was used to try to find a more accurate model. We chose SVR because the relationship between HCI and GDP may be non-linear and SVR will account for that, unlike linear regression.</p></li>
+<li><p>KNN model was chosen because how it can effectively handle a small number of features and be less sensitive to hyperparameters.</p></li>
+</ul>
+<div class="cell" data-execution_count="52">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Split the dataset into features and labels</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> encoded_df.drop(<span class="st">'2020'</span>, axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> encoded_df[<span class="st">'2020'</span>]</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Split the data into training and test sets</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(X, y, test_size<span class="op">=</span><span class="fl">0.2</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Import the necessary modules</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LinearRegression</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.svm <span class="im">import</span> SVR</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit a linear regression model</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>lr <span class="op">=</span> LinearRegression()</span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>lr.fit(X_train, y_train)</span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit an SVM model</span></span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>svm <span class="op">=</span> SVR()</span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>svm.fit(X, y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="52">
+<style>#sk-container-id-5 {color: black;background-color: white;}#sk-container-id-5 pre{padding: 0;}#sk-container-id-5 div.sk-toggleable {background-color: white;}#sk-container-id-5 label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.3em;box-sizing: border-box;text-align: center;}#sk-container-id-5 label.sk-toggleable__label-arrow:before {content: "▸";float: left;margin-right: 0.25em;color: #696969;}#sk-container-id-5 label.sk-toggleable__label-arrow:hover:before {color: black;}#sk-container-id-5 div.sk-estimator:hover label.sk-toggleable__label-arrow:before {color: black;}#sk-container-id-5 div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}#sk-container-id-5 div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}#sk-container-id-5 input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}#sk-container-id-5 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {content: "▾";}#sk-container-id-5 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-5 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-5 input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}#sk-container-id-5 div.sk-estimator {font-family: monospace;background-color: #f0f8ff;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;margin-bottom: 0.5em;}#sk-container-id-5 div.sk-estimator:hover {background-color: #d4ebff;}#sk-container-id-5 div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}#sk-container-id-5 div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-5 div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: 0;}#sk-container-id-5 div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;padding-right: 0.2em;padding-left: 0.2em;position: relative;}#sk-container-id-5 div.sk-item {position: relative;z-index: 1;}#sk-container-id-5 div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;position: relative;}#sk-container-id-5 div.sk-item::before, #sk-container-id-5 div.sk-parallel-item::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: -1;}#sk-container-id-5 div.sk-parallel-item {display: flex;flex-direction: column;z-index: 1;position: relative;background-color: white;}#sk-container-id-5 div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}#sk-container-id-5 div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}#sk-container-id-5 div.sk-parallel-item:only-child::after {width: 0;}#sk-container-id-5 div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0 0.4em 0.5em 0.4em;box-sizing: border-box;padding-bottom: 0.4em;background-color: white;}#sk-container-id-5 div.sk-label label {font-family: monospace;font-weight: bold;display: inline-block;line-height: 1.2em;}#sk-container-id-5 div.sk-label-container {text-align: center;}#sk-container-id-5 div.sk-container {/* jupyter's `normalize.less` sets `[hidden] { display: none; }` but bootstrap.min.css set `[hidden] { display: none !important; }` so we also need the `!important` here to be able to override the default hidden behavior on the sphinx rendered scikit-learn.org. See: https://github.com/scikit-learn/scikit-learn/issues/21755 */display: inline-block !important;position: relative;}#sk-container-id-5 div.sk-text-repr-fallback {display: none;}</style><div id="sk-container-id-5" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>SVR()</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br>On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden=""><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-5" type="checkbox" checked=""><label for="sk-estimator-id-5" class="sk-toggleable__label sk-toggleable__label-arrow">SVR</label><div class="sk-toggleable__content"><pre>SVR()</pre></div></div></div></div></div>
+</div>
+</div>
+<div class="cell" data-execution_count="53">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.neighbors <span class="im">import</span> KNeighborsRegressor</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co">#create the KNN model</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>knn <span class="op">=</span> KNeighborsRegressor(n_neighbors<span class="op">=</span><span class="dv">8</span>)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co"># fit the model to the scaled training data</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>knn.fit(X_train, y_train)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="53">
+<style>#sk-container-id-6 {color: black;background-color: white;}#sk-container-id-6 pre{padding: 0;}#sk-container-id-6 div.sk-toggleable {background-color: white;}#sk-container-id-6 label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.3em;box-sizing: border-box;text-align: center;}#sk-container-id-6 label.sk-toggleable__label-arrow:before {content: "▸";float: left;margin-right: 0.25em;color: #696969;}#sk-container-id-6 label.sk-toggleable__label-arrow:hover:before {color: black;}#sk-container-id-6 div.sk-estimator:hover label.sk-toggleable__label-arrow:before {color: black;}#sk-container-id-6 div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}#sk-container-id-6 div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}#sk-container-id-6 input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}#sk-container-id-6 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {content: "▾";}#sk-container-id-6 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-6 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-6 input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}#sk-container-id-6 div.sk-estimator {font-family: monospace;background-color: #f0f8ff;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;margin-bottom: 0.5em;}#sk-container-id-6 div.sk-estimator:hover {background-color: #d4ebff;}#sk-container-id-6 div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}#sk-container-id-6 div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-6 div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: 0;}#sk-container-id-6 div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;padding-right: 0.2em;padding-left: 0.2em;position: relative;}#sk-container-id-6 div.sk-item {position: relative;z-index: 1;}#sk-container-id-6 div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;position: relative;}#sk-container-id-6 div.sk-item::before, #sk-container-id-6 div.sk-parallel-item::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: -1;}#sk-container-id-6 div.sk-parallel-item {display: flex;flex-direction: column;z-index: 1;position: relative;background-color: white;}#sk-container-id-6 div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}#sk-container-id-6 div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}#sk-container-id-6 div.sk-parallel-item:only-child::after {width: 0;}#sk-container-id-6 div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0 0.4em 0.5em 0.4em;box-sizing: border-box;padding-bottom: 0.4em;background-color: white;}#sk-container-id-6 div.sk-label label {font-family: monospace;font-weight: bold;display: inline-block;line-height: 1.2em;}#sk-container-id-6 div.sk-label-container {text-align: center;}#sk-container-id-6 div.sk-container {/* jupyter's `normalize.less` sets `[hidden] { display: none; }` but bootstrap.min.css set `[hidden] { display: none !important; }` so we also need the `!important` here to be able to override the default hidden behavior on the sphinx rendered scikit-learn.org. See: https://github.com/scikit-learn/scikit-learn/issues/21755 */display: inline-block !important;position: relative;}#sk-container-id-6 div.sk-text-repr-fallback {display: none;}</style><div id="sk-container-id-6" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>KNeighborsRegressor(n_neighbors=8)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br>On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden=""><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-6" type="checkbox" checked=""><label for="sk-estimator-id-6" class="sk-toggleable__label sk-toggleable__label-arrow">KNeighborsRegressor</label><div class="sk-toggleable__content"><pre>KNeighborsRegressor(n_neighbors=8)</pre></div></div></div></div></div>
+</div>
+</div>
+<h4 class="anchored">
+R-Squared Comparisons
+</h4>
+<p>We wanted to use R-squared, which is the proportion of variation in dependent variable explained and predicted by the independent variable, as the primary performance metric to see which models were most effective in predicting GDP per capita using HCI data. We found Linear Regression to have the highest R-Squared out of the three models of 0.8406, so we used the Linear Regression model to represent our predicted GDP per capita score through an interactive map visualization. The KNN models R-Squared score was 0.4937 and the SVR R-Squared score was -0.1696. It is important that the SVR R-Square score was negative here, indicating that this model was not a good fit for our dataset.</p>
+<div class="cell" data-execution_count="54">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> mean_squared_error, r2_score</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Use the linear regression model to make predictions on the test set</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>y_pred_lr <span class="op">=</span> lr.predict(X_test)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Use the SVR model to make predictions on the test set</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>y_pred_svm <span class="op">=</span> svm.predict(X_test)</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Evaluate the linear regression model using the test set</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>mse_lr <span class="op">=</span> mean_squared_error(y_test, y_pred_lr)</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>r2_lr <span class="op">=</span> r2_score(y_test, y_pred_lr)</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Evaluate the SVR model using the test set</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>mse_svm <span class="op">=</span> mean_squared_error(y_test, y_pred_svm)</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>r2_svm <span class="op">=</span> r2_score(y_test, y_pred_svm)</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Linear Regression MSE: </span><span class="sc">{:.4f}</span><span class="st"> R2: </span><span class="sc">{:.4f}</span><span class="st">"</span>.<span class="bu">format</span>(mse_lr, r2_lr))</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"SVR MSE: </span><span class="sc">{:.4f}</span><span class="st"> R2: </span><span class="sc">{:.4f}</span><span class="st">"</span>.<span class="bu">format</span>(mse_svm, r2_svm))</span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Use the knn model to make predictions on the test set</span></span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>y_pred_knn <span class="op">=</span> knn.predict(X_test)</span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Evaluate the knn model using the test set</span></span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>mse_knn <span class="op">=</span> mean_squared_error(y_test, y_pred_knn)</span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>r2_knn <span class="op">=</span> r2_score(y_test, y_pred_knn)</span>
+<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"KNN MSE: </span><span class="sc">{:.4f}</span><span class="st"> R2: </span><span class="sc">{:.4f}</span><span class="st">"</span>.<span class="bu">format</span>(mse_knn, r2_knn))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Linear Regression MSE: 34615379.5099 R2: 0.8406
+SVR MSE: 254030694.3569 R2: -0.1696
+KNN MSE: 109963918.1055 R2: 0.4937</code></pre>
+</div>
+</div>
+<h4 class="anchored">
+Linear Regression Predictions
+</h4>
+<p>Here, we are using our best model, Linear Regression, find the R-Squared score and the predicted GDP per capita for the whole dataset. Before, we only found the values for the 20% test dataset.</p>
+<div class="cell" data-execution_count="55">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>y_pred_lr_all <span class="op">=</span> lr.predict(X)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>r2_pred_lr_all <span class="op">=</span> r2_score(y, y_pred_lr_all)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(r2_pred_lr_all)</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co">#print(y_pred_lr_all)</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>0.7802252904685397</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="56">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>predicted_df <span class="op">=</span> pd.DataFrame(y_pred_lr_all, columns<span class="op">=</span>[<span class="st">"Predicted"</span>])</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co"># reset the index of the test set</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="co"># concatenate the test set with the predicted values</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>result_df <span class="op">=</span> pd.concat([y, predicted_df], axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>result_df.head()</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="co"># result_df.to_csv('actual_predicted_values.csv', index = False)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="56">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>2020</th>
+      <th>Predicted</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>516.866552</td>
+      <td>1048.507017</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>5332.160475</td>
+      <td>12036.039461</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3337.252512</td>
+      <td>7421.897684</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1603.993477</td>
+      <td>-1732.400091</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>14787.635780</td>
+      <td>19192.659353</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<h2 class="anchored">
+Evaluation of the model
+</h2>
+<h4 class="anchored">
+Linear Regression Scatterplot
+</h4>
+<p>We wanted to efffectively represent the relationship between HCI and GDP per capita, so we decided to use a scatterplot because scatterplots are known to show whether or not a relationship exists between a multitude of data points.</p>
+<div class="cell" data-execution_count="57">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>x_plot <span class="op">=</span> encoded_df[<span class="st">"HUMAN CAPITAL INDEX 2020"</span>]</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>y_plot <span class="op">=</span> encoded_df[<span class="st">"2020"</span>]</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="co">#print(x_plot)</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="co"># print(y_plot)</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>actual_plot <span class="op">=</span> plt.scatter(x_plot, y_plot, color <span class="op">=</span> <span class="st">'green'</span>)</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>predicted_plot <span class="op">=</span> plt.scatter(x_plot, y_pred_lr_all, color<span class="op">=</span><span class="st">'red'</span>)</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a><span class="co">#obtain m (slope) and b(intercept) of linear regression line</span></span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a><span class="co">#use red as color for regression line</span></span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>plt.legend((actual_plot, predicted_plot), (<span class="st">"Actual"</span>, <span class="st">"Predicted"</span>))</span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'HCI'</span>)</span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'GDP'</span>)</span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Scatter plot with Actual and Predicted Points'</span>)</span>
+<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img src="HCI_7_1_files/figure-html/cell-16-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>This is a scatterplot of the HCI and GDP per capita actual and predicted values, where the predicted values are calculated from our Linear Regression model. There seems to be a strong, positive, and linear relationship between HCI and GDP per capita. Each data point represents a specific country in our dataset. As you can see, our predicted values from our Linear Regression model was not that far off from the actual values.</p>
+<div class="cell" data-execution_count="58">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>x_plot <span class="op">=</span> encoded_df[<span class="st">"HUMAN CAPITAL INDEX 2020"</span>]</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>y_plot <span class="op">=</span> encoded_df[<span class="st">"2020"</span>]</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="co"># print(x_plot)</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="co"># print(y_plot)</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>plt.scatter(x_plot, y_plot, color <span class="op">=</span> <span class="st">'green'</span>)</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="co">#plt.plot(x_plot, y_pred_lr_all, color='green')</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a><span class="co">#obtain m (slope) and b(intercept) of linear regression line</span></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>m, b <span class="op">=</span> np.polyfit(x_plot, y_plot, <span class="dv">1</span>)</span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a><span class="co">#use red as color for regression line</span></span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>plt.plot(x_plot, m<span class="op">*</span>x_plot<span class="op">+</span>b, color<span class="op">=</span><span class="st">'red'</span>)</span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>line <span class="op">=</span> m<span class="op">*</span>x_plot <span class="op">+</span> b</span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>plt.plot(x_plot, line, <span class="st">'r'</span>, label<span class="op">=</span><span class="st">'y=</span><span class="sc">{:.2f}</span><span class="st">x+</span><span class="sc">{:.2f}</span><span class="st">'</span>.<span class="bu">format</span>(m,b))</span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a>plt.legend(fontsize<span class="op">=</span><span class="dv">9</span>)</span>
+<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'HCI'</span>)</span>
+<span id="cb19-26"><a href="#cb19-26" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'GDP'</span>)</span>
+<span id="cb19-27"><a href="#cb19-27" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Scatter plot with linear regression line'</span>)</span>
+<span id="cb19-28"><a href="#cb19-28" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img src="HCI_7_1_files/figure-html/cell-17-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>This is a scatterplot of the actual HCI and GDP per capita values from our dataset that shows a strong, positive, and linear relationship between HCI and GDP per capita with a calculated regression like of 93475.99x + -39767.64.</p>
+<h4 class="anchored">
+World Map Visualizations
+</h4>
+<div class="cell" data-execution_count="59">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotly.graph_objects <span class="im">as</span> go</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Human Capital Index Interactive Choropleth Map</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>df_hci <span class="op">=</span> pd.read_csv(<span class="st">'/Users/mattheeter/DS4002/hci_code.csv'</span>)</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>fig_hci <span class="op">=</span> go.Figure(data<span class="op">=</span>go.Choropleth(</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>    locations <span class="op">=</span> df_hci[<span class="st">'CODE'</span>],</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>    z <span class="op">=</span> df_hci[<span class="st">'HUMAN CAPITAL INDEX 2020'</span>],</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>    text <span class="op">=</span> df_hci[<span class="st">'COUNTRY'</span>],</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>    colorscale <span class="op">=</span> <span class="st">'agsunset'</span>,</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>    autocolorscale<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>    reversescale<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>    marker_line_color<span class="op">=</span><span class="st">'darkgray'</span>,</span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>    marker_line_width<span class="op">=</span><span class="fl">0.5</span>,</span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>    colorbar_title <span class="op">=</span> <span class="st">'HCI Score (0-1)'</span>,</span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>))</span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>fig_hci.update_layout(</span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a>    title_text<span class="op">=</span><span class="st">'Human Capital Index (HCI) 2020 Across the World'</span>, </span>
+<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a>    geo<span class="op">=</span><span class="bu">dict</span>(</span>
+<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a>        showframe<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a>        showcoastlines<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb20-24"><a href="#cb20-24" aria-hidden="true" tabindex="-1"></a>        projection_type<span class="op">=</span><span class="st">'equirectangular'</span></span>
+<span id="cb20-25"><a href="#cb20-25" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb20-26"><a href="#cb20-26" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb20-27"><a href="#cb20-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-28"><a href="#cb20-28" aria-hidden="true" tabindex="-1"></a>fig_hci.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<pre><code>Unable to display output for mime type(s): application/vnd.plotly.v1+json</code></pre>
+</div>
+</div>
+<p>This interactive world map shows the HCI score (from 0 to 1) across all the countries in our dataset.</p>
+<div class="cell" data-execution_count="60">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotly.graph_objects <span class="im">as</span> go</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>df_gdp <span class="op">=</span> pd.read_csv(<span class="st">'/Users/mattheeter/DS4002/gdp_code.csv'</span>)</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>fig_gdp <span class="op">=</span> go.Figure(data<span class="op">=</span>go.Choropleth(</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>    locations <span class="op">=</span> df_gdp[<span class="st">'CODE'</span>],</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>    z <span class="op">=</span> df_gdp[<span class="st">'GDP PER CAPITA 2020'</span>],</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>    text <span class="op">=</span> df_gdp[<span class="st">'COUNTRY'</span>],</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>    colorscale <span class="op">=</span> <span class="st">'electric'</span>,</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>    autocolorscale<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>    reversescale<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>    marker_line_color<span class="op">=</span><span class="st">'darkgray'</span>,</span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>    marker_line_width<span class="op">=</span><span class="fl">0.5</span>,</span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>    colorbar_tickprefix <span class="op">=</span> <span class="st">'$'</span>,</span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>    colorbar_title <span class="op">=</span> <span class="st">'GDP Per Capita'</span>,</span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>))</span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a>fig_gdp.update_layout(</span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a>    title_text<span class="op">=</span><span class="st">'Gross Domestic Product (GDP) Per Capita 2020 Across the World'</span>, </span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a>    geo<span class="op">=</span><span class="bu">dict</span>(</span>
+<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a>        showframe<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a>        showcoastlines<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb22-24"><a href="#cb22-24" aria-hidden="true" tabindex="-1"></a>        projection_type<span class="op">=</span><span class="st">'equirectangular'</span></span>
+<span id="cb22-25"><a href="#cb22-25" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb22-26"><a href="#cb22-26" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb22-27"><a href="#cb22-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-28"><a href="#cb22-28" aria-hidden="true" tabindex="-1"></a>fig_gdp.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<pre><code>Unable to display output for mime type(s): application/vnd.plotly.v1+json</code></pre>
+</div>
+</div>
+<p>This interactive world map shows the GDP per Capita (in US $) across all the countries in our dataset.</p>
+<div class="cell" data-execution_count="61">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotly.express <span class="im">as</span> px</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ipywidgets <span class="im">import</span> interact</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>df_gdp <span class="op">=</span> pd.read_csv(<span class="st">'/Users/mattheeter/DS4002/gdp_code.csv'</span>)</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the function to filter the data</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> filter_data(min_gdp):</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>    mask <span class="op">=</span> (df_gdp[<span class="st">'GDP PER CAPITA 2020'</span>] <span class="op">&gt;</span> min_gdp)</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>    df_filtered <span class="op">=</span> df_gdp[mask]</span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> df_filtered</span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>df_filtered <span class="op">=</span> filter_data(<span class="dv">0</span>)</span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> px.choropleth(data_frame<span class="op">=</span>df_filtered,</span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>                    locations<span class="op">=</span><span class="st">'CODE'</span>, </span>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>                    locationmode<span class="op">=</span><span class="st">'ISO-3'</span>,</span>
+<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a>                    color<span class="op">=</span><span class="st">'GDP PER CAPITA 2020'</span>,</span>
+<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a>                    hover_name<span class="op">=</span><span class="st">'COUNTRY'</span>,</span>
+<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a>                    color_continuous_scale<span class="op">=</span><span class="st">'Electric'</span>,</span>
+<span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a>                    title<span class="op">=</span><span class="st">'Gross Domestic Product (GDP) Per Capita 2020 Across the World'</span>, </span>
+<span id="cb24-22"><a href="#cb24-22" aria-hidden="true" tabindex="-1"></a>                    labels<span class="op">=</span>{<span class="st">'GDP PER CAPITA 2020'</span>:<span class="st">'GDP per capita'</span>},</span>
+<span id="cb24-23"><a href="#cb24-23" aria-hidden="true" tabindex="-1"></a>                    height<span class="op">=</span><span class="dv">600</span></span>
+<span id="cb24-24"><a href="#cb24-24" aria-hidden="true" tabindex="-1"></a>                    )</span>
+<span id="cb24-25"><a href="#cb24-25" aria-hidden="true" tabindex="-1"></a>fig.show()</span>
+<span id="cb24-26"><a href="#cb24-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-27"><a href="#cb24-27" aria-hidden="true" tabindex="-1"></a>interact(filter_data, min_gdp<span class="op">=</span>(<span class="dv">0</span>, df_gdp[<span class="st">'GDP PER CAPITA 2020'</span>].<span class="bu">max</span>()))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<pre><code>Unable to display output for mime type(s): application/vnd.plotly.v1+json</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"78203862363740719d788b0a695b551a","version_major":2,"version_minor":0}
+</script>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="61">
+<pre><code>&lt;function __main__.filter_data(min_gdp)&gt;</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="62">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotly.graph_objects <span class="im">as</span> go</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="co"># GDP Predicted Interactive Choropleth Map</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>df_gdp_predicted <span class="op">=</span> pd.read_csv(<span class="st">'/Users/mattheeter/DS4002/gdp_predicted.csv'</span>)</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>fig_gdp_predicted <span class="op">=</span> go.Figure(data<span class="op">=</span>go.Choropleth(</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>    locations <span class="op">=</span> df_gdp_predicted[<span class="st">'CODE'</span>],</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>    z <span class="op">=</span> df_gdp_predicted[<span class="st">'PERCENTAGE ERROR'</span>],</span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>    text <span class="op">=</span> df_gdp_predicted[<span class="st">'COUNTRY'</span>],</span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>    colorscale <span class="op">=</span> [[<span class="dv">0</span>, <span class="st">'green'</span>], [<span class="fl">0.1</span>, <span class="st">'yellow'</span>], [<span class="dv">1</span>, <span class="st">'red'</span>]],</span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>    autocolorscale<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>    reversescale<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>    marker_line_color<span class="op">=</span><span class="st">'darkgray'</span>,</span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>    marker_line_width<span class="op">=</span><span class="fl">0.5</span>,</span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a>    colorbar_title <span class="op">=</span> <span class="st">'GDP Per Capita Percentage Error'</span>,</span>
+<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a>    zmin <span class="op">=</span> <span class="dv">0</span>,</span>
+<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a>    zmax <span class="op">=</span> <span class="dv">10</span></span>
+<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a>))</span>
+<span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a>fig_gdp_predicted.update_layout(</span>
+<span id="cb27-21"><a href="#cb27-21" aria-hidden="true" tabindex="-1"></a>    title_text<span class="op">=</span><span class="st">'Predicted GDP Per Capita 2020 Percentage Error Across the World'</span>, </span>
+<span id="cb27-22"><a href="#cb27-22" aria-hidden="true" tabindex="-1"></a>    geo<span class="op">=</span><span class="bu">dict</span>(</span>
+<span id="cb27-23"><a href="#cb27-23" aria-hidden="true" tabindex="-1"></a>        showframe<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb27-24"><a href="#cb27-24" aria-hidden="true" tabindex="-1"></a>        showcoastlines<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb27-25"><a href="#cb27-25" aria-hidden="true" tabindex="-1"></a>        projection_type<span class="op">=</span><span class="st">'equirectangular'</span></span>
+<span id="cb27-26"><a href="#cb27-26" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb27-27"><a href="#cb27-27" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb27-28"><a href="#cb27-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-29"><a href="#cb27-29" aria-hidden="true" tabindex="-1"></a>fig_gdp_predicted.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<pre><code>Unable to display output for mime type(s): application/vnd.plotly.v1+json</code></pre>
+</div>
+</div>
+<p>This interactive world map shows the percentage error between our predicted GDP per capita values (using our Linear Regression model) and the actual GDP per capital values across all the countries in our dataset.</p>
+<h2 class="anchored">
+Conclusions
+</h2>
+<ul>
+<li>In answering our first question of whether or not we could create a good machine learning model to predict GDP per capita using HCI information, we were able to create a decent machine learning model, using Linear Regression. We tested three different models: Linear Regression, SVM, and KNN, and their R-squared values were 0.8406, -0.1696, and 0.4937, respectively. Therefore, the Linear Regression model had the highest R-squared value out of the three models, so we decided to use that model to visually represent the predicted GDP per capita values.</li>
+<li>In answering our second question of whether or not we could effectively portray the relationship between HCI and GDP per capita, we were able to come up with a variety of visualizations, including scatterplots, interactive world maps, and boxplots. We noted that countries with a higher HCI score tended to also have a higher GDP per capita, hence the linear relationship between those two variables.</li>
+<li>We also learned how to develop the Flask application in Python, which allows us to upload our visualizations on an external web framework.</li>
+<li>Limitations: One limitation of our project was definitely our dataset. We only had 162 countries (or datapoints) in our dataset after removing the missing and null values, which was not a good sample size for this project. With a sample size of 162 countries, we had limited predictive power. Unfortunately, we were only able to find 2020 HCI values online because we are assuming that it takes many years to gather HCI information. Also, HCI is a fairly new concept, given that it came out in 2018, so that’s another reason why there is not a lot of data out there. However, we were really interested in this topic because we believe there were a lot of real-world applications, such as predicting health outcomes, educational achievements, and labor market outcomes. In our case, we focused on the labor market outcomes, and we noticed that countries with a higher GDP per capita have a higher HCI score, so countries should strive to increase their GDP per capita to ultimately increase their country’s overall productivity in the next generation of workers. Countries can increase their GDP per capita by focusing on four key areas: personal consumption expenditures, business investment, government spending, and net exports of goods and services.</li>
+</ul>
+<h2 class="anchored">
+Future Work
+</h2>
+<ul>
+<li>Conduct the same project in the future when more HCI data becomes available</li>
+<li>Use more performance metrics (besides R-squared)</li>
+<li>Test more stacked classifiers and deep learning models</li>
+<li>Find a different feature than HCI to predict GDP per capita</li>
+<li>Create more filters within the interactive world map visualizations</li>
+</ul>
+<h2 class="anchored">
+Sources
+</h2>
+<p>https://www.worldbank.org/en/publication/human-capital https://databank.worldbank.org/indicator/NY.GDP.PCAP.CD/1ff4a498/Popular-Indicators# https://quarto.org/docs/computations/python.html#vs-code https://ourworldindata.org/grapher/human-capital-index-vs-gdp https://plotly.com/python/choropleth-maps/ https://towardsdatascience.com/k-nearest-neighbors-94395f445221 https://www.thebalancemoney.com/components-of-gdp-explanation-formula-and-chart-3306015 https://ipywidgets.readthedocs.io/ https://getbootstrap.com/docs/4.0/components/navbar/ https://docs.tibco.com/pub/spotfire/6.5.1/doc/html/3d_scat/3d_scat_what_is_a_3d_scatter_plot.htm#:~:text=3D%20scatter%20plots%20are%20used,%2C%20Y%2C%20and%20Z%20axes. https://quarto.org/docs/output-formats/html-code.html#:~:text=%23%23%20Hiding%20Code%20For%20many,the%20document%20%60execute%60%20options.</p>
+<h2 class="anchored">
+Thank you for listening! Any questions?
+</h2>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
+<div class="modal__dialog micromodal-slide" id="quarto-log-error-modal" aria-hidden="true">
+  <div class="modal__overlay" tabindex="2" data-micromodal-close>
+    <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="quarto-log-error-modal-title">
+      <header class="modal__header">
+        <h2 class="modal__title" id="quarto-log-error-modal-title">
+          <i class="bi bi-exclamation-circle"></i>Error
+        </h2>
+        <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
+      </header>
+      <div class="modal__content" id="quarto-log-error-modal-content">
+        <pre tabindex="1" id="quarto-log-error-display"></pre>
+      </div>
+      <footer class="modal__footer">
+      </footer>
+    </div>
+  </div>
+</div>
+<style type="text/css">
+#quarto-log-error-modal .modal__overlay {
+  z-index: 5000;
+}
+#quarto-log-error-modal-content {
+  border: 1px solid #dee2e6;
+  overflow-y: auto;
+}
+#quarto-log-error-display {
+  min-height: 100px;
+  padding: 8px;
+  margin-bottom: 0;
+  font-family: monospace;
+}
+#quarto-log-error-display:focus {
+  outline: none;
+}
+.modal__dialog {
+  font-size: 16px;
+}
+.modal__overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.modal__container {
+  position: fixed;
+  top: 80px;
+  background-color: #fff;
+  padding: 15px;
+  padding-top: 10px;
+  min-width: 500px;
+  max-width: 90%;
+  max-height: 90vh;
+  border-radius: 4px;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+.modal__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.modal__title {
+  margin-top: 0;
+  margin-bottom: 0;
+  font-weight: 600;
+  border-bottom: none;
+  padding-bottom: 10px;
+  font-size: 20px;
+  color: rgb(191,71,65);
+  line-height: 1.25;
+  box-sizing: border-box;
+}
+.modal__title .bi {
+  margin-right: 7px;
+}
+.modal__close {
+  background: transparent;
+  border: 0;
+  margin-bottom: 10px;
+}
+.modal__header .modal__close:before { content: "\2715"; }
+.modal__content {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+@keyframes mmfadeIn {
+    from { opacity: 0; }
+      to { opacity: 1; }
+}
+@keyframes mmfadeOut {
+    from { opacity: 1; }
+      to { opacity: 0; }
+}
+@keyframes mmslideIn {
+  from { transform: translateY(15%); }
+    to { transform: translateY(0); }
+}
+@keyframes mmslideOut {
+    from { transform: translateY(0); }
+    to { transform: translateY(-10%); }
+}
+.micromodal-slide {
+  display: none;
+}
+.micromodal-slide.is-open {
+  display: block;
+}
+.micromodal-slide[aria-hidden="false"] .modal__overlay {
+  animation: mmfadeIn .3s cubic-bezier(0.0, 0.0, 0.2, 1);
+}
+.micromodal-slide[aria-hidden="false"] .modal__container {
+  animation: mmslideIn .3s cubic-bezier(0, 0, .2, 1);
+}
+.micromodal-slide[aria-hidden="true"] .modal__overlay {
+  animation: mmfadeOut .3s cubic-bezier(0.0, 0.0, 0.2, 1);
+}
+.micromodal-slide[aria-hidden="true"] .modal__container {
+  animation: mmslideOut .3s cubic-bezier(0, 0, .2, 1);
+}
+.micromodal-slide .modal__container,
+.micromodal-slide .modal__overlay {
+  will-change: transform;
+} 
+</style>
+<script type="text/javascript">
+  window.backupDefine = window.define; window.define = undefined;
+  /*  ansi_up.js
+   *  author : Dru Nelson
+   *  license : MIT
+   *  http://github.com/drudru/ansi_up
+   */
+   (function (root, factory) {
+      if (typeof define === 'function' && define.amd) {
+          // AMD. Register as an anonymous module.
+          define(['exports'], factory);
+      } else if (typeof exports === 'object' && typeof exports.nodeName !== 'string') {
+          // CommonJS
+          factory(exports);
+      } else {
+          // Browser globals
+          var exp = {};
+          factory(exp);
+          root.AnsiUp = exp.default;
+      }
+  }(this, function (exports) {
+  "use strict";
+  var __makeTemplateObject = (this && this.__makeTemplateObject) || function (cooked, raw) {
+      if (Object.defineProperty) { Object.defineProperty(cooked, "raw", { value: raw }); } else { cooked.raw = raw; }
+      return cooked;
+  };
+  var PacketKind;
+  (function (PacketKind) {
+      PacketKind[PacketKind["EOS"] = 0] = "EOS";
+      PacketKind[PacketKind["Text"] = 1] = "Text";
+      PacketKind[PacketKind["Incomplete"] = 2] = "Incomplete";
+      PacketKind[PacketKind["ESC"] = 3] = "ESC";
+      PacketKind[PacketKind["Unknown"] = 4] = "Unknown";
+      PacketKind[PacketKind["SGR"] = 5] = "SGR";
+      PacketKind[PacketKind["OSCURL"] = 6] = "OSCURL";
+  })(PacketKind || (PacketKind = {}));
+  var AnsiUp = (function () {
+      function AnsiUp() {
+          this.VERSION = "5.1.0";
+          this.setup_palettes();
+          this._use_classes = false;
+          this.bold = false;
+          this.italic = false;
+          this.underline = false;
+          this.fg = this.bg = null;
+          this._buffer = '';
+          this._url_whitelist = { 'http': 1, 'https': 1 };
+      }
+      Object.defineProperty(AnsiUp.prototype, "use_classes", {
+          get: function () {
+              return this._use_classes;
+          },
+          set: function (arg) {
+              this._use_classes = arg;
+          },
+          enumerable: false,
+          configurable: true
+      });
+      Object.defineProperty(AnsiUp.prototype, "url_whitelist", {
+          get: function () {
+              return this._url_whitelist;
+          },
+          set: function (arg) {
+              this._url_whitelist = arg;
+          },
+          enumerable: false,
+          configurable: true
+      });
+      AnsiUp.prototype.setup_palettes = function () {
+          var _this = this;
+          this.ansi_colors =
+              [
+                  [
+                      { rgb: [0, 0, 0], class_name: "ansi-black" },
+                      { rgb: [187, 0, 0], class_name: "ansi-red" },
+                      { rgb: [0, 187, 0], class_name: "ansi-green" },
+                      { rgb: [187, 187, 0], class_name: "ansi-yellow" },
+                      { rgb: [0, 0, 187], class_name: "ansi-blue" },
+                      { rgb: [187, 0, 187], class_name: "ansi-magenta" },
+                      { rgb: [0, 187, 187], class_name: "ansi-cyan" },
+                      { rgb: [255, 255, 255], class_name: "ansi-white" }
+                  ],
+                  [
+                      { rgb: [85, 85, 85], class_name: "ansi-bright-black" },
+                      { rgb: [255, 85, 85], class_name: "ansi-bright-red" },
+                      { rgb: [0, 255, 0], class_name: "ansi-bright-green" },
+                      { rgb: [255, 255, 85], class_name: "ansi-bright-yellow" },
+                      { rgb: [85, 85, 255], class_name: "ansi-bright-blue" },
+                      { rgb: [255, 85, 255], class_name: "ansi-bright-magenta" },
+                      { rgb: [85, 255, 255], class_name: "ansi-bright-cyan" },
+                      { rgb: [255, 255, 255], class_name: "ansi-bright-white" }
+                  ]
+              ];
+          this.palette_256 = [];
+          this.ansi_colors.forEach(function (palette) {
+              palette.forEach(function (rec) {
+                  _this.palette_256.push(rec);
+              });
+          });
+          var levels = [0, 95, 135, 175, 215, 255];
+          for (var r = 0; r < 6; ++r) {
+              for (var g = 0; g < 6; ++g) {
+                  for (var b = 0; b < 6; ++b) {
+                      var col = { rgb: [levels[r], levels[g], levels[b]], class_name: 'truecolor' };
+                      this.palette_256.push(col);
+                  }
+              }
+          }
+          var grey_level = 8;
+          for (var i = 0; i < 24; ++i, grey_level += 10) {
+              var gry = { rgb: [grey_level, grey_level, grey_level], class_name: 'truecolor' };
+              this.palette_256.push(gry);
+          }
+      };
+      AnsiUp.prototype.escape_txt_for_html = function (txt) {
+          return txt.replace(/[&<>"']/gm, function (str) {
+              if (str === "&")
+                  return "&amp;";
+              if (str === "<")
+                  return "&lt;";
+              if (str === ">")
+                  return "&gt;";
+              if (str === "\"")
+                  return "&quot;";
+              if (str === "'")
+                  return "&#x27;";
+          });
+      };
+      AnsiUp.prototype.append_buffer = function (txt) {
+          var str = this._buffer + txt;
+          this._buffer = str;
+      };
+      AnsiUp.prototype.get_next_packet = function () {
+          var pkt = {
+              kind: PacketKind.EOS,
+              text: '',
+              url: ''
+          };
+          var len = this._buffer.length;
+          if (len == 0)
+              return pkt;
+          var pos = this._buffer.indexOf("\x1B");
+          if (pos == -1) {
+              pkt.kind = PacketKind.Text;
+              pkt.text = this._buffer;
+              this._buffer = '';
+              return pkt;
+          }
+          if (pos > 0) {
+              pkt.kind = PacketKind.Text;
+              pkt.text = this._buffer.slice(0, pos);
+              this._buffer = this._buffer.slice(pos);
+              return pkt;
+          }
+          if (pos == 0) {
+              if (len == 1) {
+                  pkt.kind = PacketKind.Incomplete;
+                  return pkt;
+              }
+              var next_char = this._buffer.charAt(1);
+              if ((next_char != '[') && (next_char != ']')) {
+                  pkt.kind = PacketKind.ESC;
+                  pkt.text = this._buffer.slice(0, 1);
+                  this._buffer = this._buffer.slice(1);
+                  return pkt;
+              }
+              if (next_char == '[') {
+                  if (!this._csi_regex) {
+                      this._csi_regex = rgx(__makeTemplateObject(["\n                        ^                           # beginning of line\n                                                    #\n                                                    # First attempt\n                        (?:                         # legal sequence\n                          \u001B[                      # CSI\n                          ([<-?]?)              # private-mode char\n                          ([d;]*)                    # any digits or semicolons\n                          ([ -/]?               # an intermediate modifier\n                          [@-~])                # the command\n                        )\n                        |                           # alternate (second attempt)\n                        (?:                         # illegal sequence\n                          \u001B[                      # CSI\n                          [ -~]*                # anything legal\n                          ([\0-\u001F:])              # anything illegal\n                        )\n                    "], ["\n                        ^                           # beginning of line\n                                                    #\n                                                    # First attempt\n                        (?:                         # legal sequence\n                          \\x1b\\[                      # CSI\n                          ([\\x3c-\\x3f]?)              # private-mode char\n                          ([\\d;]*)                    # any digits or semicolons\n                          ([\\x20-\\x2f]?               # an intermediate modifier\n                          [\\x40-\\x7e])                # the command\n                        )\n                        |                           # alternate (second attempt)\n                        (?:                         # illegal sequence\n                          \\x1b\\[                      # CSI\n                          [\\x20-\\x7e]*                # anything legal\n                          ([\\x00-\\x1f:])              # anything illegal\n                        )\n                    "]));
+                  }
+                  var match = this._buffer.match(this._csi_regex);
+                  if (match === null) {
+                      pkt.kind = PacketKind.Incomplete;
+                      return pkt;
+                  }
+                  if (match[4]) {
+                      pkt.kind = PacketKind.ESC;
+                      pkt.text = this._buffer.slice(0, 1);
+                      this._buffer = this._buffer.slice(1);
+                      return pkt;
+                  }
+                  if ((match[1] != '') || (match[3] != 'm'))
+                      pkt.kind = PacketKind.Unknown;
+                  else
+                      pkt.kind = PacketKind.SGR;
+                  pkt.text = match[2];
+                  var rpos = match[0].length;
+                  this._buffer = this._buffer.slice(rpos);
+                  return pkt;
+              }
+              if (next_char == ']') {
+                  if (len < 4) {
+                      pkt.kind = PacketKind.Incomplete;
+                      return pkt;
+                  }
+                  if ((this._buffer.charAt(2) != '8')
+                      || (this._buffer.charAt(3) != ';')) {
+                      pkt.kind = PacketKind.ESC;
+                      pkt.text = this._buffer.slice(0, 1);
+                      this._buffer = this._buffer.slice(1);
+                      return pkt;
+                  }
+                  if (!this._osc_st) {
+                      this._osc_st = rgxG(__makeTemplateObject(["\n                        (?:                         # legal sequence\n                          (\u001B\\)                    # ESC                           |                           # alternate\n                          (\u0007)                      # BEL (what xterm did)\n                        )\n                        |                           # alternate (second attempt)\n                        (                           # illegal sequence\n                          [\0-\u0006]                 # anything illegal\n                          |                           # alternate\n                          [\b-\u001A]                 # anything illegal\n                          |                           # alternate\n                          [\u001C-\u001F]                 # anything illegal\n                        )\n                    "], ["\n                        (?:                         # legal sequence\n                          (\\x1b\\\\)                    # ESC \\\n                          |                           # alternate\n                          (\\x07)                      # BEL (what xterm did)\n                        )\n                        |                           # alternate (second attempt)\n                        (                           # illegal sequence\n                          [\\x00-\\x06]                 # anything illegal\n                          |                           # alternate\n                          [\\x08-\\x1a]                 # anything illegal\n                          |                           # alternate\n                          [\\x1c-\\x1f]                 # anything illegal\n                        )\n                    "]));
+                  }
+                  this._osc_st.lastIndex = 0;
+                  {
+                      var match_1 = this._osc_st.exec(this._buffer);
+                      if (match_1 === null) {
+                          pkt.kind = PacketKind.Incomplete;
+                          return pkt;
+                      }
+                      if (match_1[3]) {
+                          pkt.kind = PacketKind.ESC;
+                          pkt.text = this._buffer.slice(0, 1);
+                          this._buffer = this._buffer.slice(1);
+                          return pkt;
+                      }
+                  }
+                  {
+                      var match_2 = this._osc_st.exec(this._buffer);
+                      if (match_2 === null) {
+                          pkt.kind = PacketKind.Incomplete;
+                          return pkt;
+                      }
+                      if (match_2[3]) {
+                          pkt.kind = PacketKind.ESC;
+                          pkt.text = this._buffer.slice(0, 1);
+                          this._buffer = this._buffer.slice(1);
+                          return pkt;
+                      }
+                  }
+                  if (!this._osc_regex) {
+                      this._osc_regex = rgx(__makeTemplateObject(["\n                        ^                           # beginning of line\n                                                    #\n                        \u001B]8;                    # OSC Hyperlink\n                        [ -:<-~]*       # params (excluding ;)\n                        ;                           # end of params\n                        ([!-~]{0,512})        # URL capture\n                        (?:                         # ST\n                          (?:\u001B\\)                  # ESC                           |                           # alternate\n                          (?:\u0007)                    # BEL (what xterm did)\n                        )\n                        ([ -~]+)              # TEXT capture\n                        \u001B]8;;                   # OSC Hyperlink End\n                        (?:                         # ST\n                          (?:\u001B\\)                  # ESC                           |                           # alternate\n                          (?:\u0007)                    # BEL (what xterm did)\n                        )\n                    "], ["\n                        ^                           # beginning of line\n                                                    #\n                        \\x1b\\]8;                    # OSC Hyperlink\n                        [\\x20-\\x3a\\x3c-\\x7e]*       # params (excluding ;)\n                        ;                           # end of params\n                        ([\\x21-\\x7e]{0,512})        # URL capture\n                        (?:                         # ST\n                          (?:\\x1b\\\\)                  # ESC \\\n                          |                           # alternate\n                          (?:\\x07)                    # BEL (what xterm did)\n                        )\n                        ([\\x20-\\x7e]+)              # TEXT capture\n                        \\x1b\\]8;;                   # OSC Hyperlink End\n                        (?:                         # ST\n                          (?:\\x1b\\\\)                  # ESC \\\n                          |                           # alternate\n                          (?:\\x07)                    # BEL (what xterm did)\n                        )\n                    "]));
+                  }
+                  var match = this._buffer.match(this._osc_regex);
+                  if (match === null) {
+                      pkt.kind = PacketKind.ESC;
+                      pkt.text = this._buffer.slice(0, 1);
+                      this._buffer = this._buffer.slice(1);
+                      return pkt;
+                  }
+                  pkt.kind = PacketKind.OSCURL;
+                  pkt.url = match[1];
+                  pkt.text = match[2];
+                  var rpos = match[0].length;
+                  this._buffer = this._buffer.slice(rpos);
+                  return pkt;
+              }
+          }
+      };
+      AnsiUp.prototype.ansi_to_html = function (txt) {
+          this.append_buffer(txt);
+          var blocks = [];
+          while (true) {
+              var packet = this.get_next_packet();
+              if ((packet.kind == PacketKind.EOS)
+                  || (packet.kind == PacketKind.Incomplete))
+                  break;
+              if ((packet.kind == PacketKind.ESC)
+                  || (packet.kind == PacketKind.Unknown))
+                  continue;
+              if (packet.kind == PacketKind.Text)
+                  blocks.push(this.transform_to_html(this.with_state(packet)));
+              else if (packet.kind == PacketKind.SGR)
+                  this.process_ansi(packet);
+              else if (packet.kind == PacketKind.OSCURL)
+                  blocks.push(this.process_hyperlink(packet));
+          }
+          return blocks.join("");
+      };
+      AnsiUp.prototype.with_state = function (pkt) {
+          return { bold: this.bold, italic: this.italic, underline: this.underline, fg: this.fg, bg: this.bg, text: pkt.text };
+      };
+      AnsiUp.prototype.process_ansi = function (pkt) {
+          var sgr_cmds = pkt.text.split(';');
+          while (sgr_cmds.length > 0) {
+              var sgr_cmd_str = sgr_cmds.shift();
+              var num = parseInt(sgr_cmd_str, 10);
+              if (isNaN(num) || num === 0) {
+                  this.fg = this.bg = null;
+                  this.bold = false;
+                  this.italic = false;
+                  this.underline = false;
+              }
+              else if (num === 1) {
+                  this.bold = true;
+              }
+              else if (num === 3) {
+                  this.italic = true;
+              }
+              else if (num === 4) {
+                  this.underline = true;
+              }
+              else if (num === 22) {
+                  this.bold = false;
+              }
+              else if (num === 23) {
+                  this.italic = false;
+              }
+              else if (num === 24) {
+                  this.underline = false;
+              }
+              else if (num === 39) {
+                  this.fg = null;
+              }
+              else if (num === 49) {
+                  this.bg = null;
+              }
+              else if ((num >= 30) && (num < 38)) {
+                  this.fg = this.ansi_colors[0][(num - 30)];
+              }
+              else if ((num >= 40) && (num < 48)) {
+                  this.bg = this.ansi_colors[0][(num - 40)];
+              }
+              else if ((num >= 90) && (num < 98)) {
+                  this.fg = this.ansi_colors[1][(num - 90)];
+              }
+              else if ((num >= 100) && (num < 108)) {
+                  this.bg = this.ansi_colors[1][(num - 100)];
+              }
+              else if (num === 38 || num === 48) {
+                  if (sgr_cmds.length > 0) {
+                      var is_foreground = (num === 38);
+                      var mode_cmd = sgr_cmds.shift();
+                      if (mode_cmd === '5' && sgr_cmds.length > 0) {
+                          var palette_index = parseInt(sgr_cmds.shift(), 10);
+                          if (palette_index >= 0 && palette_index <= 255) {
+                              if (is_foreground)
+                                  this.fg = this.palette_256[palette_index];
+                              else
+                                  this.bg = this.palette_256[palette_index];
+                          }
+                      }
+                      if (mode_cmd === '2' && sgr_cmds.length > 2) {
+                          var r = parseInt(sgr_cmds.shift(), 10);
+                          var g = parseInt(sgr_cmds.shift(), 10);
+                          var b = parseInt(sgr_cmds.shift(), 10);
+                          if ((r >= 0 && r <= 255) && (g >= 0 && g <= 255) && (b >= 0 && b <= 255)) {
+                              var c = { rgb: [r, g, b], class_name: 'truecolor' };
+                              if (is_foreground)
+                                  this.fg = c;
+                              else
+                                  this.bg = c;
+                          }
+                      }
+                  }
+              }
+          }
+      };
+      AnsiUp.prototype.transform_to_html = function (fragment) {
+          var txt = fragment.text;
+          if (txt.length === 0)
+              return txt;
+          txt = this.escape_txt_for_html(txt);
+          if (!fragment.bold && !fragment.italic && !fragment.underline && fragment.fg === null && fragment.bg === null)
+              return txt;
+          var styles = [];
+          var classes = [];
+          var fg = fragment.fg;
+          var bg = fragment.bg;
+          if (fragment.bold)
+              styles.push('font-weight:bold');
+          if (fragment.italic)
+              styles.push('font-style:italic');
+          if (fragment.underline)
+              styles.push('text-decoration:underline');
+          if (!this._use_classes) {
+              if (fg)
+                  styles.push("color:rgb(" + fg.rgb.join(',') + ")");
+              if (bg)
+                  styles.push("background-color:rgb(" + bg.rgb + ")");
+          }
+          else {
+              if (fg) {
+                  if (fg.class_name !== 'truecolor') {
+                      classes.push(fg.class_name + "-fg");
+                  }
+                  else {
+                      styles.push("color:rgb(" + fg.rgb.join(',') + ")");
+                  }
+              }
+              if (bg) {
+                  if (bg.class_name !== 'truecolor') {
+                      classes.push(bg.class_name + "-bg");
+                  }
+                  else {
+                      styles.push("background-color:rgb(" + bg.rgb.join(',') + ")");
+                  }
+              }
+          }
+          var class_string = '';
+          var style_string = '';
+          if (classes.length)
+              class_string = " class=\"" + classes.join(' ') + "\"";
+          if (styles.length)
+              style_string = " style=\"" + styles.join(';') + "\"";
+          return "<span" + style_string + class_string + ">" + txt + "</span>";
+      };
+      ;
+      AnsiUp.prototype.process_hyperlink = function (pkt) {
+          var parts = pkt.url.split(':');
+          if (parts.length < 1)
+              return '';
+          if (!this._url_whitelist[parts[0]])
+              return '';
+          var result = "<a href=\"" + this.escape_txt_for_html(pkt.url) + "\">" + this.escape_txt_for_html(pkt.text) + "</a>";
+          return result;
+      };
+      return AnsiUp;
+  }());
+  function rgx(tmplObj) {
+      var subst = [];
+      for (var _i = 1; _i < arguments.length; _i++) {
+          subst[_i - 1] = arguments[_i];
+      }
+      var regexText = tmplObj.raw[0];
+      var wsrgx = /^\s+|\s+\n|\s*#[\s\S]*?\n|\n/gm;
+      var txt2 = regexText.replace(wsrgx, '');
+      return new RegExp(txt2);
+  }
+  function rgxG(tmplObj) {
+      var subst = [];
+      for (var _i = 1; _i < arguments.length; _i++) {
+          subst[_i - 1] = arguments[_i];
+      }
+      var regexText = tmplObj.raw[0];
+      var wsrgx = /^\s+|\s+\n|\s*#[\s\S]*?\n|\n/gm;
+      var txt2 = regexText.replace(wsrgx, '');
+      return new RegExp(txt2, 'g');
+  }
+      Object.defineProperty(exports, "__esModule", { value: true });
+      exports.default = AnsiUp;
+  }));
+  // micromodal: https://github.com/Ghosh/micromodal
+  !function(e,t){"object"==typeof exports&&"undefined"!=typeof module?module.exports=t():"function"==typeof define&&define.amd?define(t):(e="undefined"!=typeof globalThis?globalThis:e||self).MicroModal=t()}(this,(function(){"use strict";function e(e,t){for(var o=0;o<t.length;o++){var n=t[o];n.enumerable=n.enumerable||!1,n.configurable=!0,"value"in n&&(n.writable=!0),Object.defineProperty(e,n.key,n)}}function t(e){return function(e){if(Array.isArray(e))return o(e)}(e)||function(e){if("undefined"!=typeof Symbol&&Symbol.iterator in Object(e))return Array.from(e)}(e)||function(e,t){if(!e)return;if("string"==typeof e)return o(e,t);var n=Object.prototype.toString.call(e).slice(8,-1);"Object"===n&&e.constructor&&(n=e.constructor.name);if("Map"===n||"Set"===n)return Array.from(e);if("Arguments"===n||/^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n))return o(e,t)}(e)||function(){throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.")}()}function o(e,t){(null==t||t>e.length)&&(t=e.length);for(var o=0,n=new Array(t);o<t;o++)n[o]=e[o];return n}var n,i,a,r,s,l=(n=["a[href]","area[href]",'input:not([disabled]):not([type="hidden"]):not([aria-hidden])',"select:not([disabled]):not([aria-hidden])","textarea:not([disabled]):not([aria-hidden])","button:not([disabled]):not([aria-hidden])","iframe","object","embed","[contenteditable]",'[tabindex]:not([tabindex^="-"])'],i=function(){function o(e){var n=e.targetModal,i=e.triggers,a=void 0===i?[]:i,r=e.onShow,s=void 0===r?function(){}:r,l=e.onClose,c=void 0===l?function(){}:l,d=e.openTrigger,u=void 0===d?"data-micromodal-trigger":d,f=e.closeTrigger,h=void 0===f?"data-micromodal-close":f,v=e.openClass,g=void 0===v?"is-open":v,m=e.disableScroll,b=void 0!==m&&m,y=e.disableFocus,p=void 0!==y&&y,w=e.awaitCloseAnimation,E=void 0!==w&&w,k=e.awaitOpenAnimation,M=void 0!==k&&k,A=e.debugMode,C=void 0!==A&&A;!function(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}(this,o),this.modal=document.getElementById(n),this.config={debugMode:C,disableScroll:b,openTrigger:u,closeTrigger:h,openClass:g,onShow:s,onClose:c,awaitCloseAnimation:E,awaitOpenAnimation:M,disableFocus:p},a.length>0&&this.registerTriggers.apply(this,t(a)),this.onClick=this.onClick.bind(this),this.onKeydown=this.onKeydown.bind(this)}var i,a,r;return i=o,(a=[{key:"registerTriggers",value:function(){for(var e=this,t=arguments.length,o=new Array(t),n=0;n<t;n++)o[n]=arguments[n];o.filter(Boolean).forEach((function(t){t.addEventListener("click",(function(t){return e.showModal(t)}))}))}},{key:"showModal",value:function(){var e=this,t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:null;if(this.activeElement=document.activeElement,this.modal.setAttribute("aria-hidden","false"),this.modal.classList.add(this.config.openClass),this.scrollBehaviour("disable"),this.addEventListeners(),this.config.awaitOpenAnimation){var o=function t(){e.modal.removeEventListener("animationend",t,!1),e.setFocusToFirstNode()};this.modal.addEventListener("animationend",o,!1)}else this.setFocusToFirstNode();this.config.onShow(this.modal,this.activeElement,t)}},{key:"closeModal",value:function(){var e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:null,t=this.modal;if(this.modal.setAttribute("aria-hidden","true"),this.removeEventListeners(),this.scrollBehaviour("enable"),this.activeElement&&this.activeElement.focus&&this.activeElement.focus(),this.config.onClose(this.modal,this.activeElement,e),this.config.awaitCloseAnimation){var o=this.config.openClass;this.modal.addEventListener("animationend",(function e(){t.classList.remove(o),t.removeEventListener("animationend",e,!1)}),!1)}else t.classList.remove(this.config.openClass)}},{key:"closeModalById",value:function(e){this.modal=document.getElementById(e),this.modal&&this.closeModal()}},{key:"scrollBehaviour",value:function(e){if(this.config.disableScroll){var t=document.querySelector("body");switch(e){case"enable":Object.assign(t.style,{overflow:""});break;case"disable":Object.assign(t.style,{overflow:"hidden"})}}}},{key:"addEventListeners",value:function(){this.modal.addEventListener("touchstart",this.onClick),this.modal.addEventListener("click",this.onClick),document.addEventListener("keydown",this.onKeydown)}},{key:"removeEventListeners",value:function(){this.modal.removeEventListener("touchstart",this.onClick),this.modal.removeEventListener("click",this.onClick),document.removeEventListener("keydown",this.onKeydown)}},{key:"onClick",value:function(e){(e.target.hasAttribute(this.config.closeTrigger)||e.target.parentNode.hasAttribute(this.config.closeTrigger))&&(e.preventDefault(),e.stopPropagation(),this.closeModal(e))}},{key:"onKeydown",value:function(e){27===e.keyCode&&this.closeModal(e),9===e.keyCode&&this.retainFocus(e)}},{key:"getFocusableNodes",value:function(){var e=this.modal.querySelectorAll(n);return Array.apply(void 0,t(e))}},{key:"setFocusToFirstNode",value:function(){var e=this;if(!this.config.disableFocus){var t=this.getFocusableNodes();if(0!==t.length){var o=t.filter((function(t){return!t.hasAttribute(e.config.closeTrigger)}));o.length>0&&o[0].focus(),0===o.length&&t[0].focus()}}}},{key:"retainFocus",value:function(e){var t=this.getFocusableNodes();if(0!==t.length)if(t=t.filter((function(e){return null!==e.offsetParent})),this.modal.contains(document.activeElement)){var o=t.indexOf(document.activeElement);e.shiftKey&&0===o&&(t[t.length-1].focus(),e.preventDefault()),!e.shiftKey&&t.length>0&&o===t.length-1&&(t[0].focus(),e.preventDefault())}else t[0].focus()}}])&&e(i.prototype,a),r&&e(i,r),o}(),a=null,r=function(e){if(!document.getElementById(e))return console.warn("MicroModal: ❗Seems like you have missed %c'".concat(e,"'"),"background-color: #f8f9fa;color: #50596c;font-weight: bold;","ID somewhere in your code. Refer example below to resolve it."),console.warn("%cExample:","background-color: #f8f9fa;color: #50596c;font-weight: bold;",'<div class="modal" id="'.concat(e,'"></div>')),!1},s=function(e,t){if(function(e){e.length<=0&&(console.warn("MicroModal: ❗Please specify at least one %c'micromodal-trigger'","background-color: #f8f9fa;color: #50596c;font-weight: bold;","data attribute."),console.warn("%cExample:","background-color: #f8f9fa;color: #50596c;font-weight: bold;",'<a href="#" data-micromodal-trigger="my-modal"></a>'))}(e),!t)return!0;for(var o in t)r(o);return!0},{init:function(e){var o=Object.assign({},{openTrigger:"data-micromodal-trigger"},e),n=t(document.querySelectorAll("[".concat(o.openTrigger,"]"))),r=function(e,t){var o=[];return e.forEach((function(e){var n=e.attributes[t].value;void 0===o[n]&&(o[n]=[]),o[n].push(e)})),o}(n,o.openTrigger);if(!0!==o.debugMode||!1!==s(n,r))for(var l in r){var c=r[l];o.targetModal=l,o.triggers=t(c),a=new i(o)}},show:function(e,t){var o=t||{};o.targetModal=e,!0===o.debugMode&&!1===r(e)||(a&&a.removeEventListeners(),(a=new i(o)).showModal())},close:function(e){e?a.closeModalById(e):a.closeModal()}});return"undefined"!=typeof window&&(window.MicroModal=l),l}));  
+  window.define = window.backupDefine; window.backupDefine = undefined;
+  </script>
+<script type="text/javascript">
+  (function () {
+    // forward keydown events so shortcuts can work in vscode, see:
+    // https://github.com/microsoft/vscode/issues/65452#issuecomment-586485815
+    if (window.parent.postMessage) {
+      window.document.addEventListener('keydown', e => {
+        const event = {
+          type: "keydown",
+          data: {
+            altKey: e.altKey,
+            code: e.code,
+            ctrlKey: e.ctrlKey,
+            isComposing: e.isComposing,
+            key: e.key,
+            location: e.location,
+            metaKey: e.metaKey,
+            repeat: e.repeat,
+            shiftKey: e.shiftKey
+          }
+        };
+        window.parent.postMessage(event, '*');
+      });
+    }
+    // listen for execCommand messages
+    window.addEventListener("message", function (event) {
+      if (event.data.type === "devhost-exec-command") {
+        window.document.execCommand(event.data.data);
+      } 
+    }, true);
+    const logEntries = new Array(1000);
+    logEntries.offset = 0;
+    function recordLogEntry(entry) {
+      logEntries[logEntries.offset++] = entry;
+      logEntries.offset %= logEntries.length;
+    }
+    function getLogEntry(i) { // backwards, 0 is most recent
+        return logEntries[(logEntries.offset - 1 - i + logEntries.length) % logEntries.length];
+    }
+    const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
+    let path = window.location.pathname;
+    if (!/\/$/.test(path)) path += "/";
+    const devServerSocket = new WebSocket(protocol + "//" + window.location.host + path);
+    let reloadPage = true;
+    addEventListener("beforeunload", () => {
+      // don't reload page in case of navigation events
+      reloadPage = false;
+    })
+    devServerSocket.onopen = () => {
+      console.log('Socket connection open. Listening for events.');
+      // if the socket closes for any reason (e.g. this occurs in electron apps
+      // when the computer suspends) then reload to reestablish the connection 
+      devServerSocket.onclose = () => {
+        if (reloadPage) {
+          console.log('Socket connection closed. Reloading.');
+          window.location.reload(true);
+        }
+      }
+    };
+    // append for errors that occur within the error window
+    let lastError = 0;
+    const kErrorWindow = 2500;
+    function showError(msg) {
+      const ansiUp = new AnsiUp
+      const html = ansiUp.ansi_to_html(msg.trim());
+      const display = document.getElementById("quarto-log-error-display");
+      if (display.innerHTML && ((Date.now() - lastError) < kErrorWindow)) {
+        display.innerHTML = display.innerHTML + "<br/>" +  html;
+      } else {
+        display.innerHTML = html
+      }
+      lastError = Date.now()
+      MicroModal.show('quarto-log-error-modal', {
+        awaitCloseAnimation: true,
+        onClose: () => { display.innerHTML = ""; }
+      });
+      // post message to parent indicating we had an error
+      if (window.parent.postMessage) {
+        window.parent.postMessage({
+          type: "error",
+          msg: msg,
+        }, "*");
+      }
+    }
+    // see if there is already an error to show
+    const renderError = document.getElementById("quarto-render-error");
+    if (renderError) {
+      showError(renderError.innerHTML.trim());
+    }
+    const normalizeTarget = (target) => {
+      return target.replace(/\/index\.html/, "/")
+    };
+    devServerSocket.onmessage = (msg) => {
+      if (msg.data.startsWith('reload')) {
+        let target = normalizeTarget(msg.data.replace(/^reload/, ""));
+        // prepend proxy path to target if we have one
+        if (target) {
+          const pathPrefix = 
+            window.location.pathname.match(/^.*?\/p\/\w+\//) ||
+            window.location.pathname.match(/^.*?\/user\/[\w\d]+\/proxy\/\d+\//);
+          if (pathPrefix) {
+            target = pathPrefix + target.slice(1);
+          }
+        }
+        if (target && (target !== normalizeTarget(window.location.pathname))) {
+          window.location.replace(target);
+        } else {
+          window.location.reload(true);
+        }
+      } else if (msg.data.startsWith('log:')) {
+        const ansiUp = new AnsiUp
+        const log = JSON.parse(msg.data.substr(4));
+        recordLogEntry(log);
+        if (log.levelName === "ERROR") {
+          showError(log.msgFormatted)
+        } else {
+          // see if there is a knitr error to report
+          const kExecutionHalted = "Execution halted";
+          if (log.msg.indexOf(kExecutionHalted) !== -1) {
+            // scan backwards for beginning of error
+            const errorEntries = [getLogEntry(0).msgFormatted];
+            for (let i=1; i<logEntries.length; i++) {
+              const logEntry = getLogEntry(i);
+              if (logEntry) {
+                errorEntries.unshift(logEntry.msgFormatted);
+                if (logEntry.msg.indexOf("Quitting from lines") !== -1) {
+                  showError(errorEntries.join(""));
+                  break;
+                } else if (logEntry.msg.indexOf(kExecutionHalted) !== -1) {
+                  break;
+                }
+              } else {
+                break;
+              }
+            }
+          }
+        }
+      }
+    };
+  })();
+</script>
+
+<script type="text/javascript">
+  if (window.parent.postMessage) {
+    // wait for message providing confirmation we are in a devhost
+    window.addEventListener("message", function (event) {
+      if (event.data.type === "devhost-init") {
+        window.quartoDevhost = {
+          openInputFile: function (line, column, highlight) {
+            window.parent.postMessage({
+              type: "openfile",
+              file: "/Users/mattheeter/Downloads/HCI_7_1.ipynb",
+              line: line,
+              column: column,
+              highlight: highlight
+            }, event.origin);
+          }
+        };
+      } else if (event.data.type === "goback") {
+        window.history.back()
+      } else if (event.data.type === "goforward") {
+        window.history.forward()
+      }
+    }, true);
+    // notify host of navigation (e.g. for 'pop out' command)
+    window.parent.postMessage({
+      type: "navigate",
+      href: window.location.href,
+      file: "/Users/mattheeter/Downloads/HCI_7_1.ipynb"
+    }, "*");
+  }
+</script>
+
+<script type="text/javascript">
+(function() {
+  var origin = "http://localhost:6373";
+  var search = "?quartoPreviewReqId=1673624892200&amp;quartoPreviewThemeCategory=dark";
+  function isLocalHref(href) {
+    return href.startsWith(origin);
+  }
+  function ensureLinkOpensInNewWindow(linkEl) {
+    var useOpenExternalMessage =
+      search.includes("quartoPreviewReqId=") &&
+      window.parent.postMessage;
+    if (useOpenExternalMessage) {
+      linkEl.addEventListener("click", function(event) {
+        window.parent.postMessage({
+          type: "openExternal",
+          url: linkEl.href,
+        }, "*");
+        event.preventDefault();
+        return false;
+      });
+    }
+    var isRStudio = search.includes("capabilities=");
+    if (isRStudio) {
+      linkEl.target = "_blank";
+    }
+  }
+  function initialize() {
+    // only do this if we are in an iframe
+    try {
+      if (window.self === window.top) {
+        return;
+      }
+    // added during rc phase of v1.2 -- don't allow
+    // unexpected exceptions to derail the feature
+    } catch {
+      return;
+    }
+    var linkEls = document.getElementsByTagName("a");
+    for (var linkEl of linkEls) {
+      if (linkEl.href && !isLocalHref(linkEl.href)) {
+        ensureLinkOpensInNewWindow(linkEl);
+      }
+    }
+  }
+  initialize();
+})();
+</script>
